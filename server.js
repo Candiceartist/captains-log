@@ -14,7 +14,7 @@ app.get('/', (req, res) => {
         description: 'Test description'
     }]
 
-    res.render('index', { text: 'Hello'})
+    res.render('index', { articles: articles })
 })
 
 app.listen(3000)
