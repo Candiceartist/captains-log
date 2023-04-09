@@ -40,7 +40,7 @@ function saveArticleAndRedirect(path) {
     article.markdown = req.body.markdown
     try {
       article = await article.save()
-      res.redirect('/articles/:id')
+      res.redirect('/')
     } catch (e) {
       res.render(`articles/${path}`, { article: article })
     }
