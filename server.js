@@ -1,6 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const app = express()
+const Article = require('./models/article')
 const articleRouter = require('./routes/articles')
 
 const mongoURI = process.env.MONGO_URI;
@@ -14,25 +15,14 @@ mongoose.connect('mongodb+srv://candiceartist:Livewire286@cluster0.pxtgk1p.mongo
 
 
 app.set('view engine', 'ejs')
-
-app.use('/articles', articleRouter)
 app.use(express.urlencoded({ extended: false }))
 
-app.get('/', (req, res) => {
-    const articles = [{
-        title:" test article ",
-        createdAt: new Date(),
-        description: 'Test description'
-    },
-    {
-        title:" test article 2 ",
-        createdAt: new Date(),
-        description: 'Test description 2'
-    }
-]
-    
 
+
+app.get('/', async (req, res) => {
+    const articles = await Article.find().sort({ createdAt: 'desc' })
     res.render('articles/index', { articles: articles })
-})
+  })
 
+app.use('/articles', articleRouter)
 app.listen(3000)
